@@ -21,7 +21,7 @@ public class CourtController {
 
     @Autowired
     private CourtRepository courtRepository;
-    private CourtService courtService;
+    //private CourtService courtService;
 
     @GetMapping("/all")
     public List<Court> findAllCourts() {
@@ -41,30 +41,36 @@ public class CourtController {
         }
     }
 
-
-    @PostMapping ("/court/{update}")
-
-    public Court saveCourt(@Validated @RequestBody Court court) {
-
-        return courtRepository.save(court);
-    }
-
-    /*@PutMapping ("/court/create")
-    public Court createCourt(@Validated @RequestBody Court court) {
-        return courtRepository.save(court);
-    }*/
-
-    @PostMapping("/court/create")
+    @PostMapping("/create")
     public ResponseEntity<String> createCourt(@RequestBody Court court) {
         Court Court = courtRepository.save(court);
         return ResponseEntity.ok("Court added successfully");
     }
 
-    @DeleteMapping("/court/delete")
-    public ResponseEntity<String> deleteCourt(@Validated @RequestBody Court court) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteCourt( @RequestBody Court court) {
         courtRepository.delete(court);
         return ResponseEntity.ok("Court deleted successfully");
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateCourt(@PathVariable Integer id, @RequestBody Court updatedCourt) {
+        Optional<Court> optionalCourt = courtRepository.findById(id);
+        if (optionalCourt.isPresent()) {
+            Court existingCourt = optionalCourt.get();
+            existingCourt.setCourtName(updatedCourt.getCourtName());
+            existingCourt.setSportCenterId(updatedCourt.getSportCenterId());
+            existingCourt.setCapacity(updatedCourt.getCapacity());
+            existingCourt.setPrice(updatedCourt.getPrice());
+            existingCourt.setSport(updatedCourt.getSport());
+
+            Court savedCourt = courtRepository.save(existingCourt);
+            return ResponseEntity.ok("Court updated successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
    /*@PatchMapping("/{id}")
     public ResponseEntity<String> updateCourt(@PathVariable("id") Long id, @Validated @RequestBody Court court) {

@@ -11,7 +11,7 @@ public class Court {
     private Integer id;
 
     @Column(name="name")
-    private String name;
+    private String courtName;
     @Column(name="sport_center_id")
     private Integer sportCenterId;
 
@@ -29,12 +29,12 @@ public class Court {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCourtName() {
+        return courtName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCourtName(String courtName) {
+        this.courtName = courtName;
     }
 
     public Integer getSportCenterId() {

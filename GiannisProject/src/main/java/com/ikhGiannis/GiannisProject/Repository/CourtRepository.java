@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface CourtRepository extends JpaRepository<Court, Integer> {
-
+    
 }

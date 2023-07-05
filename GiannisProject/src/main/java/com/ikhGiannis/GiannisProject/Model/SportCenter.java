@@ -7,12 +7,12 @@ import jakarta.persistence.*;
 @Table(name = "sport_center")
 public class SportCenter {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="center_id")
-    private Integer id;
+    private Integer sportCenterId;
 
     @Column(name="name")
-    private String name;
+    private String sportCenterName;
     @Column(name="owner_id")
     private Integer ownerId;
 
@@ -20,20 +20,20 @@ public class SportCenter {
     private String address;
 
 
-    public Integer getId() {
-        return id;
+    public Integer getSportCenterId() {
+        return sportCenterId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSportCenterId(Integer sportCenterId) {
+        this.sportCenterId = sportCenterId;
     }
 
-    public String getName() {
-        return name;
+    public String getSportCenterName() {
+        return sportCenterName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSportCenterName(String sportCenterName) {
+        this.sportCenterName = sportCenterName;
     }
 
     public Integer getOwnerId() {
