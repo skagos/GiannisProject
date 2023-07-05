@@ -1,7 +1,9 @@
 package com.ikhGiannis.GiannisProject.Model;
 
-
 import jakarta.persistence.*;
+
+import java.util.Set;
+
 
 @Entity
 @Table(name = "sport_center")
@@ -18,6 +20,11 @@ public class SportCenter {
 
     @Column(name="address")
     private String address;
+
+
+    @OneToMany(mappedBy = "sportCenter")
+    private Set<Court> courts;
+
 
 
     public Integer getSportCenterId() {
@@ -53,4 +60,11 @@ public class SportCenter {
         this.address = address;
     }
 
+    public Set<Court> getCourts() {
+        return courts;
+    }
+
+    public void setCourts(Set<Court> courts) {
+        this.courts = courts;
+    }
 }

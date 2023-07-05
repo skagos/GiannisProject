@@ -19,6 +19,9 @@ public class Owner {
     private String email;
     @Column(name="password")
     private Integer password;
+    @ManyToOne
+    @JoinColumn(name = "center_id",nullable = false)
+    private SportCenter sportCenter;
     public Integer getOwnerId() {   return ownerId; }
 
     public void setOwnerId(Integer ownerId) {
@@ -45,4 +48,19 @@ public class Owner {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public SportCenter getSportCenter() {
+        return sportCenter;
+    }
+
+    public void setSportCenter(SportCenter sportCenter) {
+        this.sportCenter = sportCenter;
+    }
 }

@@ -2,7 +2,6 @@ package com.ikhGiannis.GiannisProject.Controller;
 
 
 
-import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.Owner;
 import com.ikhGiannis.GiannisProject.Repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +55,7 @@ public class OwnerController {
             existingOwner.setOwnerName(updatedOwner.getOwnerName());
             existingOwner.setSurname(updatedOwner.getSurname());
             existingOwner.setPassword(updatedOwner.getPassword());
+            existingOwner.setEmail(updatedOwner.getEmail());
 
             Owner savedOwner = ownerRepository.save(existingOwner);
             return ResponseEntity.ok("Owner updated successfully");

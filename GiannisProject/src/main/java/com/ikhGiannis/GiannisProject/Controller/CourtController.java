@@ -46,6 +46,7 @@ public class CourtController {
         Court Court = courtRepository.save(court);
         return ResponseEntity.ok("Court added successfully");
     }
+    //
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteCourt( @RequestBody Court court) {
@@ -59,10 +60,10 @@ public class CourtController {
         if (optionalCourt.isPresent()) {
             Court existingCourt = optionalCourt.get();
             existingCourt.setCourtName(updatedCourt.getCourtName());
-            existingCourt.setSportCenterId(updatedCourt.getSportCenterId());
+            //existingCourt.setSportCenterId(updatedCourt.getSportCenterId());
             existingCourt.setCapacity(updatedCourt.getCapacity());
             existingCourt.setPrice(updatedCourt.getPrice());
-            existingCourt.setSport(updatedCourt.getSport());
+//            existingCourt.setSport(updatedCourt.getSport());
 
             Court savedCourt = courtRepository.save(existingCourt);
             return ResponseEntity.ok("Court updated successfully");

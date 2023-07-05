@@ -2,10 +2,9 @@ package com.ikhGiannis.GiannisProject.Controller;
 
 import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.SportCenter;
+import com.ikhGiannis.GiannisProject.Repository.CourtRepository;
 import com.ikhGiannis.GiannisProject.Repository.SportCenterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +14,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/sportCenter")
-public class SportCenterController {
+public class SportCenterController extends Court{
     @Autowired
 
     private SportCenterRepository sportCenterRepository;
+    private CourtRepository courtRepository;
 
     @GetMapping("/all")
     public List<SportCenter> findAllCourts() {
@@ -32,6 +32,7 @@ public class SportCenterController {
 
         if (sportCenter.isPresent()) {
             return ResponseEntity.ok().body(sportCenter.get());
+            //return ResponseEntity.ok().body(Courts.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -51,9 +52,10 @@ public class SportCenterController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateSportCenter(@PathVariable Integer sportCenterId, @RequestBody SportCenter updatedSportCenter) {
-        Optional<SportCenter> optionalCourt = sportCenterRepository.findById(sportCenterId);
-        if (optionalCourt.isPresent()) {
-            SportCenter existingSportCenter = optionalCourt.get();
+        Optional<SportCenter> optionalSportCenter = sportCenterRepository.findById(sportCenterId);
+        if (optionalSportCenter.isPresent()) {
+            SportCenter existingSportCenter = optionalSportCenter.get();
+            existingSportCenter.setCourts(updatedSportCenter.getCourts());
             existingSportCenter.setSportCenterName(updatedSportCenter.getSportCenterName());
             existingSportCenter.setOwnerId(updatedSportCenter.getOwnerId());
             existingSportCenter.setAddress(updatedSportCenter.getAddress());

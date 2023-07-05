@@ -2,6 +2,8 @@ package com.ikhGiannis.GiannisProject.Model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "Court")
 public class Court {
@@ -12,8 +14,6 @@ public class Court {
 
     @Column(name="name")
     private String courtName;
-    @Column(name="sport_center_id")
-    private Integer sportCenterId;
 
     @Column(name="sport")
     private String sport;
@@ -21,6 +21,11 @@ public class Court {
     private Integer capacity;
     @Column(name="price")
     private Integer price;
+
+    @ManyToOne
+    @JoinColumn(name="sport_center_id", nullable=false)
+    private SportCenter sportCenter;
+
     public Integer getId() {
         return id;
     }
@@ -37,16 +42,10 @@ public class Court {
         this.courtName = courtName;
     }
 
-    public Integer getSportCenterId() {
-        return sportCenterId;
-    }
-
-    public void setSportCenterId(Integer sportCenterId) {
-        this.sportCenterId = sportCenterId;
-    }
     public Integer getCapacity() {
         return capacity;
     }
+
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
@@ -54,6 +53,7 @@ public class Court {
     public Integer getPrice() {
         return price;
     }
+
     public void setPrice(Integer price) {
         this.price = price;
     }
@@ -64,5 +64,13 @@ public class Court {
 
     public void setSport(String sport) {
         this.sport = sport;
+    }
+
+    public SportCenter getSportCenter() {
+        return sportCenter;
+    }
+
+    public void setSportCenter(SportCenter sportCenter) {
+        this.sportCenter = sportCenter;
     }
 }
