@@ -2,6 +2,8 @@ package com.ikhGiannis.GiannisProject.Model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "owner")
 public class Owner {
@@ -19,9 +21,10 @@ public class Owner {
     private String email;
     @Column(name="password")
     private Integer password;
-    @ManyToOne
-    @JoinColumn(name = "center_id",nullable = false)
-    private SportCenter sportCenter;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<SportCenter> sportCenters;
+
     public Integer getOwnerId() {   return ownerId; }
 
     public void setOwnerId(Integer ownerId) {
@@ -56,11 +59,11 @@ public class Owner {
         this.email = email;
     }
 
-    public SportCenter getSportCenter() {
-        return sportCenter;
+    public Set<SportCenter> getSportCenters() {
+        return sportCenters;
     }
 
-    public void setSportCenter(SportCenter sportCenter) {
-        this.sportCenter = sportCenter;
+    public void setSportCenters(Set<SportCenter> sportCenters) {
+        this.sportCenters = sportCenters;
     }
 }

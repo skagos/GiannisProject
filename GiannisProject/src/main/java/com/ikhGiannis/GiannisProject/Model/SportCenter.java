@@ -1,5 +1,6 @@
 package com.ikhGiannis.GiannisProject.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -15,8 +16,6 @@ public class SportCenter {
 
     @Column(name="name")
     private String sportCenterName;
-    @Column(name="owner_id")
-    private Integer ownerId;
 
     @Column(name="address")
     private String address;
@@ -24,7 +23,10 @@ public class SportCenter {
 
     @OneToMany(mappedBy = "sportCenter")
     private Set<Court> courts;
-
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="owner_id",nullable = false)
+    private Owner owner;
 
 
     public Integer getSportCenterId() {
@@ -43,14 +45,13 @@ public class SportCenter {
         this.sportCenterName = sportCenterName;
     }
 
-    public Integer getOwnerId() {
-        return ownerId;
+    public Owner getOwner() {
+        return owner;
     }
 
-    public void setOwnerId(Integer sportCenterId) {
-        this.ownerId = ownerId;
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
-
 
     public String getAddress() {
         return address;

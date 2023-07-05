@@ -1,6 +1,7 @@
 package com.ikhGiannis.GiannisProject.Controller;
 
 import com.ikhGiannis.GiannisProject.Model.Court;
+import com.ikhGiannis.GiannisProject.Model.SportCenter;
 import com.ikhGiannis.GiannisProject.Repository.CourtRepository;
 import com.ikhGiannis.GiannisProject.Service.CourtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +47,21 @@ public class CourtController {
         Court Court = courtRepository.save(court);
         return ResponseEntity.ok("Court added successfully");
     }
-    //
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCourt( @RequestBody Court court) {
-        courtRepository.delete(court);
-        return ResponseEntity.ok("Court deleted successfully");
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCourtById(@PathVariable (value = "id") int id) {
+        Optional<Court> court = courtRepository.findById(id);
+        if (court.isPresent()) {
+            courtRepository.delete(court.get());
+            return ResponseEntity.ok("Court deleted successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateCourt(@PathVariable Integer id, @RequestBody Court updatedCourt) {
+    public ResponseEntity<String> updateCourt(@PathVariable (value = "id") int id, @RequestBody Court updatedCourt) {
         Optional<Court> optionalCourt = courtRepository.findById(id);
         if (optionalCourt.isPresent()) {
             Court existingCourt = optionalCourt.get();
@@ -63,7 +69,7 @@ public class CourtController {
             //existingCourt.setSportCenterId(updatedCourt.getSportCenterId());
             existingCourt.setCapacity(updatedCourt.getCapacity());
             existingCourt.setPrice(updatedCourt.getPrice());
-//            existingCourt.setSport(updatedCourt.getSport());
+            existingCourt.setSport(updatedCourt.getSport());
 
             Court savedCourt = courtRepository.save(existingCourt);
             return ResponseEntity.ok("Court updated successfully");

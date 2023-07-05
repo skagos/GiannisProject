@@ -2,6 +2,7 @@ package com.ikhGiannis.GiannisProject.Controller;
 
 
 
+import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.Owner;
 import com.ikhGiannis.GiannisProject.Repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +43,19 @@ public class OwnerController {
         return ResponseEntity.ok("Owner added successfully");
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteOwner( @RequestBody Owner owner) {
-        ownerRepository.delete(owner);
-        return ResponseEntity.ok("Owner deleted successfully");
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteOwnerById(@PathVariable (value = "id") int owenerId) {
+        Optional<Owner> owner = ownerRepository.findById(owenerId);
+        if (owner.isPresent()) {
+            ownerRepository.delete(owner.get());
+            return ResponseEntity.ok("Owner deleted successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateCourt(@PathVariable Integer id, @RequestBody Owner updatedOwner) {
-        Optional<Owner> optionalOwner = ownerRepository.findById(id);
+    public ResponseEntity<String> updateCourt(@PathVariable (value = "id") int ownerId, @RequestBody Owner updatedOwner) {
+        Optional<Owner> optionalOwner = ownerRepository.findById(ownerId);
         if (optionalOwner.isPresent()) {
             Owner existingOwner = optionalOwner.get();
             existingOwner.setOwnerName(updatedOwner.getOwnerName());

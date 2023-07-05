@@ -44,22 +44,26 @@ public class SportCenterController extends Court{
         return ResponseEntity.ok("Sport Center added successfully");
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteSportCenter(@Validated @RequestBody SportCenter sportCenter) {
-        sportCenterRepository.delete(sportCenter);
-        return ResponseEntity.ok("Sport Center deleted successfully");
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteSportCenter(@PathVariable (value = "id") int sportCenterId, @RequestBody SportCenter sportCenter) {
+        Optional<SportCenter> existingSportCenter = sportCenterRepository.findById(sportCenterId);
+        if (existingSportCenter.isPresent()) {
+            sportCenterRepository.delete(existingSportCenter.get());
+            return ResponseEntity.ok("Sport Center deleted successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateSportCenter(@PathVariable Integer sportCenterId, @RequestBody SportCenter updatedSportCenter) {
+    public ResponseEntity<String> updateSportCenter(@PathVariable (value = "id") int sportCenterId, @RequestBody SportCenter updatedSportCenter) {
         Optional<SportCenter> optionalSportCenter = sportCenterRepository.findById(sportCenterId);
         if (optionalSportCenter.isPresent()) {
             SportCenter existingSportCenter = optionalSportCenter.get();
-            existingSportCenter.setCourts(updatedSportCenter.getCourts());
             existingSportCenter.setSportCenterName(updatedSportCenter.getSportCenterName());
-            existingSportCenter.setOwnerId(updatedSportCenter.getOwnerId());
             existingSportCenter.setAddress(updatedSportCenter.getAddress());
-
+            existingSportCenter.setCourts(updatedSportCenter.getCourts());
             SportCenter savedSportCenter = sportCenterRepository.save(existingSportCenter);
             return ResponseEntity.ok("Sport Center updated successfully");
         } else {
