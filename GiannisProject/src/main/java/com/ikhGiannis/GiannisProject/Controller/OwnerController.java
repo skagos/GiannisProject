@@ -5,6 +5,7 @@ package com.ikhGiannis.GiannisProject.Controller;
 import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.Owner;
 import com.ikhGiannis.GiannisProject.Repository.OwnerRepository;
+import com.ikhGiannis.GiannisProject.Service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +21,10 @@ public class OwnerController {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    //private OwnerService ownerService;
+
+
+
+
 
     @GetMapping("/all")
     public List<Owner> findAllOwners(){

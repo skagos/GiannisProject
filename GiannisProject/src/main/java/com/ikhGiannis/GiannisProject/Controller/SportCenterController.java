@@ -41,13 +41,15 @@ public class SportCenterController extends Court{
         Page<SportCenter> sportCenterPage;
 
         do {
-            Pageable pageable = PageRequest.of(page, 10);
+            Pageable pageable = PageRequest.of(page, 100);
             sportCenterPage = sportCenterRepository.findAll(pageable);
             sportCenterPages.add(sportCenterPage);
 
             page++;
-        } while (page < 10 );
+        }  while (page < 10 );
+        //while (page < 10 );
         //while (sportCenterPage.hasNext());
+
         System.out.println("-----------------------------------------end of page-----------------------------------");
         return sportCenterPages;
     }

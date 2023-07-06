@@ -4,9 +4,10 @@ import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.Owner;
 import com.ikhGiannis.GiannisProject.Repository.OwnerRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Service
 public class OwnerService {
     private OwnerRepository ownerRepository;
     public OwnerService(OwnerRepository ownerRepository){this.ownerRepository=ownerRepository;}
@@ -25,4 +26,6 @@ public class OwnerService {
     public ResponseEntity<String> deleteOwner(Owner owner) {
         return ResponseEntity.ok("Owner deleted successfully");
     }
+
+
 }

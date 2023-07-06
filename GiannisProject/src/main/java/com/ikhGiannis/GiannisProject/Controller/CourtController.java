@@ -51,7 +51,7 @@ public List<Page<Court>> findAllCourts() {
     int pageCount = 0;
     Page<Court> courtPage;
     do {
-        Pageable pageable = PageRequest.of(pageCount, 10);
+        Pageable pageable = PageRequest.of(pageCount, 10000);
         courtPage = courtRepository.findAll(pageable);
         courtPages.add(courtPage);
         pageCount++;

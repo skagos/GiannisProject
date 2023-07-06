@@ -65,7 +65,7 @@ public class SportCenter {
     public Set<Court> getCourts() {
         return courts;
     }
-
+    @JsonIgnore
     public void setCourts(Set<Court> courts) {
         this.courts = courts;
     }
