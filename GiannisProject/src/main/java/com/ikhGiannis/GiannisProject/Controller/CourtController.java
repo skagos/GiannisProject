@@ -5,6 +5,9 @@ import com.ikhGiannis.GiannisProject.Model.SportCenter;
 import com.ikhGiannis.GiannisProject.Repository.CourtRepository;
 import com.ikhGiannis.GiannisProject.Service.CourtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import java.util.Optional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+
 
 @RestController
 @RequestMapping("/api/court")
@@ -24,11 +30,37 @@ public class CourtController {
     private CourtRepository courtRepository;
     //private CourtService courtService;
 
-    @GetMapping("/all")
-    public List<Court> findAllCourts() {
-        //System.out.println("fadsdfd");
-        return (List<Court>) courtRepository.findAll();
-    }
+//    @GetMapping("/all")
+//    public List<Page<Court>> findAllCourts() {
+//        List<Page<Court>> courts = new ArrayList<>();
+//        int pageCount = 0;
+//        Page<Court> courtPage;
+//        do{
+//            Pageable pageable = PageRequest.of(pageCount,10);
+//            courtPage = courtRepository.findAll(pageable);
+//            courtPages.add(courtPage);
+//            System.out.println("end of page");
+//            pageCount++;
+//        }while (courtPage.hasNext());
+//
+//        return courtPages;
+//    }
+@GetMapping("/all")
+public List<Page<Court>> findAllCourts() {
+    List<Page<Court>> courtPages = new ArrayList<>();
+    int pageCount = 0;
+    Page<Court> courtPage;
+    do {
+        Pageable pageable = PageRequest.of(pageCount, 10);
+        courtPage = courtRepository.findAll(pageable);
+        courtPages.add(courtPage);
+        pageCount++;
+    }  while (courtPage.hasNext());
+    //while (pageCount < 1000 );
+    //while (courtPage.hasNext());
+    System.out.println("-----------------------------------------end of page-----------------------------------");
+    return courtPages;
+}
 
 
     @GetMapping("/{id}")
@@ -43,8 +75,8 @@ public class CourtController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createCourt(@RequestBody Court court) {
-        Court Court = courtRepository.save(court);
+    public ResponseEntity<String> createCourt(@RequestBody Court newCourt) {
+        Court newcourt = courtRepository.save(newCourt);
         return ResponseEntity.ok("Court added successfully");
     }
 

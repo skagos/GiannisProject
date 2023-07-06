@@ -1,5 +1,6 @@
 package com.ikhGiannis.GiannisProject.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -23,6 +24,7 @@ public class Owner {
     private Integer password;
 
     @OneToMany(mappedBy = "owner")
+    @JsonIgnore
     private Set<SportCenter> sportCenters;
 
     public Integer getOwnerId() {   return ownerId; }

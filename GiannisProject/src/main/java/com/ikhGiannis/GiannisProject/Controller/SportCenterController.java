@@ -4,11 +4,15 @@ import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.SportCenter;
 import com.ikhGiannis.GiannisProject.Repository.CourtRepository;
 import com.ikhGiannis.GiannisProject.Repository.SportCenterRepository;
+import com.ikhGiannis.GiannisProject.Service.SportCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,14 +20,39 @@ import java.util.Optional;
 @RequestMapping("/api/sportCenter")
 public class SportCenterController extends Court{
     @Autowired
-
     private SportCenterRepository sportCenterRepository;
     private CourtRepository courtRepository;
+    @Autowired
+    private SportCenterService ikhSportCenterService;
+
+
+
+//    @GetMapping("/all")
+//    public Page<SportCenter> getAllSportCenters(@RequestParam(defaultValue = "0") int page,
+//                                                @RequestParam(defaultValue = "100") int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        return sportCenterRepository.findAll(pageable);
+//    }
 
     @GetMapping("/all")
-    public List<SportCenter> findAllCourts() {
-        return (List<SportCenter>) sportCenterRepository.findAll();
+    public List<Page<SportCenter>> getAllSportCenters() {
+        List<Page<SportCenter>> sportCenterPages = new ArrayList<>();
+        int page = 0;
+        Page<SportCenter> sportCenterPage;
+
+        do {
+            Pageable pageable = PageRequest.of(page, 10);
+            sportCenterPage = sportCenterRepository.findAll(pageable);
+            sportCenterPages.add(sportCenterPage);
+
+            page++;
+        } while (page < 10 );
+        //while (sportCenterPage.hasNext());
+        System.out.println("-----------------------------------------end of page-----------------------------------");
+        return sportCenterPages;
     }
+
+
 
 
     @GetMapping("/{id}")
@@ -69,6 +98,13 @@ public class SportCenterController extends Court{
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+
+    @GetMapping("/bulkInstert")
+    public ResponseEntity Bulk () {
+         ikhSportCenterService.bulkInsertTry();
+         return null;
     }
 
 }

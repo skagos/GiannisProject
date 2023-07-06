@@ -23,6 +23,7 @@ public class SportCenter {
 
     @OneToMany(mappedBy = "sportCenter")
     private Set<Court> courts;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="owner_id",nullable = false)
