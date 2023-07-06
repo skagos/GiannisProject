@@ -109,26 +109,38 @@ public List<Page<Court>> findAllCourts() {
             return ResponseEntity.notFound().build();
         }
     }
+    @PatchMapping("/patch/update/{id}")
+    public ResponseEntity<String> partiallyUpdateCourt(@PathVariable(value = "id") int id, @RequestBody Court partialCourt) {
+        Optional<Court> optionalCourt = courtRepository.findById(id);
+        if (optionalCourt.isPresent()) {
+            Court existingCourt = optionalCourt.get();
 
 
-   /*@PatchMapping("/{id}")
-    public ResponseEntity<String> updateCourt(@PathVariable("id") Long id, @Validated @RequestBody Court court) {
-        Court existingCourt = courtRepository.findCourtById(id);
+            if (partialCourt.getCourtName() != null) {
+                existingCourt.setCourtName(partialCourt.getCourtName());
+            }
+            if (partialCourt.getSportCenter() != null) {
+                existingCourt.setSportCenter(partialCourt.getSportCenter());
+            }
+            if (partialCourt.getCapacity() != null) {
+                existingCourt.setCapacity(partialCourt.getCapacity());
+            }
+            if (partialCourt.getPrice() != null) {
+                existingCourt.setPrice(partialCourt.getPrice());
+            }
+            if (partialCourt.getSport() != null) {
+                existingCourt.setSport(partialCourt.getSport());
+            }
 
-        if (existingCourt == null) {
+            Court savedCourt = courtRepository.save(existingCourt);
+            return ResponseEntity.ok("Court partially updated successfully");
+        } else {
             return ResponseEntity.notFound().build();
         }
+    }
 
-        // Update the fields of the existing court with the new values
-        existingCourt.setName(court.getName());
-        existingCourt.setSport(court.getSport());
-        existingCourt.setCapacity(court.getCapacity());
-        existingCourt.setPrice(court.getPrice());
-        // Add more fields to update as needed
 
-        courtRepository.save(existingCourt);
-        return ResponseEntity.ok("Court updated successfully");
-    }*/
+
 
 }
 
