@@ -1,23 +1,17 @@
 package com.ikhGiannis.GiannisProject.Model;
 
-
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "groups")
-public class Group {
+@Table(name = "team")
+public class Team {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="group_id")
     private Integer groupId;
 
-    @Column(name="name")
-    private String courtName;
-
     @Column(name = "sport")
-    private String sport;
+    private String groupSport;
 
     @Column(name = "court_id")
     private Integer courtId;
@@ -55,14 +49,6 @@ public class Group {
         this.courtId = courtId;
     }
 
-    public String getCourtName() {
-        return courtName;
-    }
-
-    public void setCourtName(String courtName) {
-        this.courtName = courtName;
-    }
-
     public Integer getGroupId() {
         return groupId;
     }
@@ -71,12 +57,12 @@ public class Group {
         this.groupId = groupId;
     }
 
-    public String getSport() {
-        return sport;
+    public String getGroupSport() {
+        return groupSport;
     }
 
-    public void setSport(String sport) {
-        this.sport = sport;
+    public void setGroupSport(String groupSport) {
+        this.groupSport = groupSport;
     }
 
     public Integer getGroupCapacity() {

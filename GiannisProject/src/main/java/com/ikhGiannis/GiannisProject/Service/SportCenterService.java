@@ -76,6 +76,7 @@ import com.ikhGiannis.GiannisProject.Repository.SportCenterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.Query;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -137,4 +138,5 @@ public class SportCenterService {
 
         executorService.shutdown();
     }
+
 }

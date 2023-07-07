@@ -1,6 +1,7 @@
 package com.ikhGiannis.GiannisProject.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -22,7 +23,7 @@ public class Owner {
     private String email;
     @Column(name="password")
     private Integer password;
-
+    //@JsonIgnoreProperties(value = {"sportCenterId"})
     @OneToMany(mappedBy = "owner")
     @JsonIgnore
     private Set<SportCenter> sportCenters;

@@ -1,13 +1,9 @@
 package com.ikhGiannis.GiannisProject.Repository;
-
-import com.ikhGiannis.GiannisProject.Model.Owner;
+import com.ikhGiannis.GiannisProject.Model.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
-public interface OwnerRepository extends JpaRepository<Owner, Integer> {
+public interface TeamRepository extends JpaRepository<Team, Integer> {
 
 }
-
-

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,14 @@ public class SportCenterController extends Court{
 //        return sportCenterRepository.findAll(pageable);
 //    }
 
+
+
+    @GetMapping("/courtCounts")
+    public List<SportCenter> getSportCenterCourtCounts() {
+        return sportCenterRepository.kati();
+    }
+
+
     @GetMapping("/all")
     public List<Page<SportCenter>> getAllSportCenters() {
         List<Page<SportCenter>> sportCenterPages = new ArrayList<>();
@@ -53,8 +62,6 @@ public class SportCenterController extends Court{
         System.out.println("-----------------------------------------end of page-----------------------------------");
         return sportCenterPages;
     }
-
-
 
 
     @GetMapping("/{id}")

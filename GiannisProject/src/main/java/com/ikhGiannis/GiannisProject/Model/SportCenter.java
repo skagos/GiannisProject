@@ -1,6 +1,7 @@
 package com.ikhGiannis.GiannisProject.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -20,11 +21,11 @@ public class SportCenter {
     @Column(name="address")
     private String address;
 
-
+    //@JsonIgnoreProperties(value = {"courtId"})
     @OneToMany(mappedBy = "sportCenter")
     private Set<Court> courts;
 
-    @JsonIgnore
+   @JsonIgnoreProperties(value = {"ownerId"})
     @ManyToOne
     @JoinColumn(name="owner_id",nullable = false)
     private Owner owner;

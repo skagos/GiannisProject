@@ -1,36 +1,17 @@
 package com.ikhGiannis.GiannisProject.Controller;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import com.ikhGiannis.GiannisProject.Model.Court;
-import com.ikhGiannis.GiannisProject.Model.SportCenter;
 import com.ikhGiannis.GiannisProject.Repository.CourtRepository;
 import com.ikhGiannis.GiannisProject.Service.CourtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Flux;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -67,8 +48,9 @@ public class CourtController {
                 .bodyToMono(String.class);
     }
 
+
     @GetMapping("/currency")
-    public Mono<String> getPopulationOfCitiesDetails() {
+    public Mono<String> getCurrencyDetails() {
         return webClient.get()
                 .uri("/currency")
                 .retrieve()
@@ -169,10 +151,6 @@ public class CourtController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
-
-
 
 
 }
