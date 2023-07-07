@@ -4,6 +4,8 @@ import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Repository.CourtRepository;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +14,13 @@ import java.util.concurrent.TimeUnit;
 
 public class CourtService {
     private CourtRepository courtRepository;
+    private WebClient webClient;
+
+    public CourtService() {
+        this.webClient = WebClient.builder()
+                .baseUrl("https://countriesnow.space/api/v0.1/countries")
+                .build();
+    }
 
     public List<Court> getAllCourts() {
         return courtRepository.findAll();

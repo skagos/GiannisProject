@@ -1,10 +1,12 @@
 package com.ikhGiannis.GiannisProject.Controller;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.SportCenter;
@@ -22,6 +24,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 
 import java.util.ArrayList;
@@ -38,8 +43,45 @@ public class CourtController {
     private CourtRepository courtRepository;
     private CourtService courtService;
 
+    private WebClient webClient;
 
+    public CourtController() {
+        this.webClient = WebClient.builder()
+                .baseUrl("https://countriesnow.space/api/v0.1/countries")
+                .build();
 
+    }
+
+    private Mono<String> callWebClient() {
+        return webClient.get()
+                .uri("/positions")
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+
+    @GetMapping("/positions")
+    public Mono<String> getPositionDetails() {
+        return webClient.get()
+                .uri("/positions")
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+
+    @GetMapping("/currency")
+    public Mono<String> getPopulationOfCitiesDetails() {
+        return webClient.get()
+                .uri("/currency")
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+
+    @GetMapping("/flag")
+    public Mono<String> getFlagDetails() {
+        return webClient.get()
+                .uri("/flag/unicode")
+                .retrieve()
+                .bodyToMono(String.class);
+    }
 
 
     @GetMapping("/all/{num}/{size}")
@@ -127,6 +169,11 @@ public class CourtController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+
+
+
 
 }
 
