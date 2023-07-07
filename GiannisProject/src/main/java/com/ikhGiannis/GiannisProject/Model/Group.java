@@ -6,21 +6,18 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Groups")
+@Table(name = "groups")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="group_id")
     private Integer groupId;
 
-    @Column(name = "sport")
-    private String sport;
-
     @Column(name="name")
     private String courtName;
 
-    @Column(name="date")
-    private Date date;
+    @Column(name = "sport")
+    private String sport;
 
     @Column(name = "court_id")
     private Integer courtId;
@@ -33,14 +30,6 @@ public class Group {
 
     @Column(name="group_capacity")
     private Integer groupCapacity;
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public Integer getOwnerId() {
         return ownerId;

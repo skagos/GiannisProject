@@ -102,6 +102,32 @@ public class SportCenterController extends Court{
         }
     }
 
+    @PatchMapping("/patch/update/{id}")
+    public ResponseEntity<String> partiallyUpdateSportCenter(@PathVariable(value = "id") int id, @RequestBody SportCenter partialSportCenter) {
+        Optional<SportCenter> optionalSportCenter = sportCenterRepository.findById(id);
+        if (optionalSportCenter.isPresent()) {
+            SportCenter existingSportCenter = optionalSportCenter.get();
+
+            if (partialSportCenter.getSportCenterName() != null) {
+                existingSportCenter.setSportCenterName(partialSportCenter.getSportCenterName());
+            }
+            if (partialSportCenter.getOwner() != null) {
+                existingSportCenter.setOwner(partialSportCenter.getOwner());
+            }
+            if (partialSportCenter.getAddress() != null) {
+                existingSportCenter.setAddress(partialSportCenter.getAddress());
+            }
+            if (partialSportCenter.getCourts() != null) {
+                existingSportCenter.setCourts(partialSportCenter.getCourts());
+            }
+
+            SportCenter savedSportCenter = sportCenterRepository.save(existingSportCenter);
+            return ResponseEntity.ok("Court partially updated successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @GetMapping("/bulkInstert")
     public ResponseEntity Bulk () {

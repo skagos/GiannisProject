@@ -1,4 +1,10 @@
 package com.ikhGiannis.GiannisProject.Controller;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.SportCenter;
@@ -8,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.util.ArrayList;
@@ -28,40 +36,21 @@ public class CourtController {
 
     @Autowired
     private CourtRepository courtRepository;
-    //private CourtService courtService;
+    private CourtService courtService;
 
-//    @GetMapping("/all")
-//    public List<Page<Court>> findAllCourts() {
-//        List<Page<Court>> courts = new ArrayList<>();
-//        int pageCount = 0;
-//        Page<Court> courtPage;
-//        do{
-//            Pageable pageable = PageRequest.of(pageCount,10);
-//            courtPage = courtRepository.findAll(pageable);
-//            courtPages.add(courtPage);
-//            System.out.println("end of page");
-//            pageCount++;
-//        }while (courtPage.hasNext());
-//
-//        return courtPages;
-//    }
-@GetMapping("/all")
-public List<Page<Court>> findAllCourts() {
-    List<Page<Court>> courtPages = new ArrayList<>();
-    int pageCount = 0;
-    Page<Court> courtPage;
-    do {
-        Pageable pageable = PageRequest.of(pageCount, 10000);
-        courtPage = courtRepository.findAll(pageable);
-        courtPages.add(courtPage);
-        pageCount++;
-    }  while (courtPage.hasNext());
-    //while (pageCount < 1000 );
-    //while (courtPage.hasNext());
-    System.out.println("-----------------------------------------end of page-----------------------------------");
-    return courtPages;
-}
 
+
+
+
+    @GetMapping("/all/{num}/{size}")
+    public Page<Court> findAllCourts(@PathVariable("num") int pageNumber,
+                                     @PathVariable("size") int pageSize)
+    {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Court> courtPage = courtRepository.findAll(pageable);
+
+        return courtPage;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Court> findCourtById(@PathVariable(value = "id") int id) {
@@ -138,9 +127,6 @@ public List<Page<Court>> findAllCourts() {
             return ResponseEntity.notFound().build();
         }
     }
-
-
-
 
 }
 
