@@ -25,8 +25,9 @@ public class Court {
     private Integer price;
 
     //@JsonIgnoreProperties(value = {"courtId"})
-    @JsonIgnoreProperties(value = {"sportCenterId"})
+
     @ManyToOne
+    @JsonIgnoreProperties({"courts","sport","capacity","courtNum","courtCount"})
     @JoinColumn(name="sport_center_id", nullable=false)
     private SportCenter sportCenter;
 

@@ -1,4 +1,5 @@
 package com.ikhGiannis.GiannisProject.Controller;
+import com.ikhGiannis.GiannisProject.Model.Owner;
 import com.ikhGiannis.GiannisProject.Model.Team;
 import com.ikhGiannis.GiannisProject.Repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,17 @@ public class TeamController {
 
     @GetMapping("/all")
     public List<Team> findAllGroup(){ return  (List<Team>) teamRepository.findAll(); }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Team> findTeamById(@PathVariable(value = "id")int groupId){
+        Optional<Team> team = teamRepository.findById(groupId);
+
+        if (team.isPresent()) {
+            return ResponseEntity.ok().body(team.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PatchMapping("/patch/update/{id}")
     public ResponseEntity<String> partiallyUpdateGroup(@PathVariable(value = "id") int id, @RequestBody Team partialTeam) {

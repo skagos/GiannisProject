@@ -23,10 +23,9 @@ public class Owner {
     private String email;
     @Column(name="password")
     private Integer password;
-    //@JsonIgnoreProperties(value = {"sportCenterId"})
+
     @OneToMany(mappedBy = "owner")
-    @JsonIgnore
-    private Set<SportCenter> sportCenters;
+    @JsonIgnoreProperties({"courts","owner","sportCenter"})
 
     public Integer getOwnerId() {   return ownerId; }
 
@@ -60,13 +59,5 @@ public class Owner {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Set<SportCenter> getSportCenters() {
-        return sportCenters;
-    }
-
-    public void setSportCenters(Set<SportCenter> sportCenters) {
-        this.sportCenters = sportCenters;
     }
 }

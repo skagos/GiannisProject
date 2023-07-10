@@ -21,21 +21,25 @@ public class SportCenter {
     @Column(name="address")
     private String address;
 
+    @JsonIgnore
     @Transient
     private Long courtCount;
 
+    @JsonIgnore
     @Transient
     private Long courtNum;
 
+    @JsonIgnore
     @Transient
     private Long sport;
 
+    @JsonIgnore
     @Transient
     private Long capacity;
 
-
-    //@JsonIgnoreProperties(value = {"courtId"})
     @OneToMany(mappedBy = "sportCenter")
+    @JsonIgnoreProperties({"sportCenter","courts"})
+
     private Set<Court> courts;
 
     public Long getCourtCount() {
@@ -46,7 +50,7 @@ public class SportCenter {
         this.courtCount = courtCount;
     }
 
-    @JsonIgnoreProperties(value = {"ownerId"})
+
     @ManyToOne
     @JoinColumn(name="owner_id",nullable = false)
     private Owner owner;
@@ -112,7 +116,7 @@ public class SportCenter {
         this.capacity = capacity;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public void setCourts(Set<Court> courts) {
         this.courts = courts;
     }
