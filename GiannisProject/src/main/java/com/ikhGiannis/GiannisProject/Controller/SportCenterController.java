@@ -3,6 +3,8 @@ package com.ikhGiannis.GiannisProject.Controller;
 import com.ikhGiannis.GiannisProject.Model.Court;
 import com.ikhGiannis.GiannisProject.Model.SportCenter;
 import com.ikhGiannis.GiannisProject.Repository.CourtRepository;
+import com.ikhGiannis.GiannisProject.Repository.SportCenterDTO;
+import com.ikhGiannis.GiannisProject.Repository.SportCenterDTO2;
 import com.ikhGiannis.GiannisProject.Repository.SportCenterRepository;
 import com.ikhGiannis.GiannisProject.Service.SportCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,6 @@ import java.util.Optional;
 public class SportCenterController extends Court{
     @Autowired
     private SportCenterRepository sportCenterRepository;
-    private CourtRepository courtRepository;
     @Autowired
     private SportCenterService ikhSportCenterService;
 
@@ -37,9 +38,40 @@ public class SportCenterController extends Court{
 
 
 
-    @GetMapping("/courtCounts")
-    public List<SportCenter> getSportCenterCourtCounts() {
+//    @GetMapping("/courtCounts")
+//    public Collection<SportCenter> getSportCenterCourtCounts() {
+//        return sportCenterRepository.kati();
+//    }
+
+//    @GetMapping("/kati")
+//    public List<SportCenter> getSportCenterKati() {
+//        return sportCenterRepository.getSportCenterNames();
+//    }
+
+    @GetMapping("/kati")
+    public List<SportCenter> getSportCenterKati() {
         return sportCenterRepository.kati();
+    }
+
+    @GetMapping("/center2")
+    public List<String> getSportCenterIdName() {
+        return sportCenterRepository.getSportCenterNames();
+    }
+
+    @GetMapping("/courtCount")
+    public List<Object[]> getSportCenterCourtCounts() {
+        return sportCenterRepository.findSportCenterCourtCounts();
+    }
+
+
+    @GetMapping("/dtoTry")
+    public List<SportCenterDTO> getAllSportCenters2() {
+        return sportCenterRepository.findAllWithCourtCount();
+    }
+
+    @GetMapping("/dtoTry2")
+    public List<SportCenterDTO2> getAllSportCentersSportCapacity() {
+        return sportCenterRepository.findAllCapacitySport();
     }
 
 

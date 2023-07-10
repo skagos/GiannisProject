@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -48,6 +49,10 @@ public class CourtController {
                 .bodyToMono(String.class);
     }
 
+//    @GetMapping("/statistics")
+//    public List<Court> getStatistics() {
+//        return courtRepository.findSportCenterCourtStatistics();
+//    }
 
     @GetMapping("/currency")
     public Mono<String> getCurrencyDetails() {
