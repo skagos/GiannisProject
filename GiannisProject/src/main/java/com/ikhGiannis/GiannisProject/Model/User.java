@@ -26,6 +26,10 @@ public class User {
         @Column(name="password")
         private String password;
 
+        @OneToMany(mappedBy = "users")
+
+        //@On(mappedBy = "users")
+
 
     public String getPassword() {
         return password;

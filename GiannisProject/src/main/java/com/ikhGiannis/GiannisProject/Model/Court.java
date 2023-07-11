@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,15 @@ public class Court {
     @JsonIgnoreProperties({"courts","sport","capacity","courtNum","courtCount"})
     @JoinColumn(name="sport_center_id", nullable=false)
     private SportCenter sportCenter;
+
+    @OneToMany(mappedBy = "court")
+    @JsonIgnoreProperties({"sportCenter","courts","teams"})
+    private Set<Team> teams;
+
+    @OneToOne
+    @JoinColumn(name ="rate_id",nullable = false)
+    private Rate rate;
+
 
     public Integer getId() {
         return id;
@@ -77,5 +87,20 @@ public class Court {
 
     public void setSportCenter(SportCenter sportCenter) {
         this.sportCenter = sportCenter;
+    }
+    public Set<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Set<Team> teams) {
+        this.teams = teams;
+    }
+
+    public Rate getRate() {
+        return rate;
+    }
+
+    public void setRate(Rate rate) {
+        this.rate = rate;
     }
 }

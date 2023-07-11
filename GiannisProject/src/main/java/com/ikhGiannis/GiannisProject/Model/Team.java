@@ -1,5 +1,6 @@
 package com.ikhGiannis.GiannisProject.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,25 +14,23 @@ public class Team {
     @Column(name = "sport")
     private String groupSport;
 
-    @Column(name = "court_id")
-    private Integer courtId;
-
     @Column(name= "joined_players")
     private Integer joinedPlayers;
 
-    @Column(name="owner_id")
-    private Integer ownerId;
 
     @Column(name="group_capacity")
     private Integer groupCapacity;
 
-    public Integer getOwnerId() {
-        return ownerId;
-    }
+    @ManyToOne
+    @JsonIgnoreProperties({"teams","sportCenter","courts","user","rate"})
+    @JoinColumn(name = "court_id",nullable = false)
+    private Court court;
 
-    public void setOwnerId(Integer ownerId) {
-        this.ownerId = ownerId;
-    }
+    @OneToOne
+    @JsonIgnoreProperties({"rate"})
+    @JoinColumn(name = "owner_id",nullable = false)
+    private User user;
+
 
     public Integer getJoinedPlayers() {
         return joinedPlayers;
@@ -41,13 +40,7 @@ public class Team {
         this.joinedPlayers = joinedPlayers;
     }
 
-    public Integer getCourtId() {
-        return courtId;
-    }
 
-    public void setCourtId(Integer courtId) {
-        this.courtId = courtId;
-    }
 
     public Integer getGroupId() {
         return groupId;
@@ -71,5 +64,21 @@ public class Team {
 
     public void setGroupCapacity(Integer groupCapacity) {
         this.groupCapacity = groupCapacity;
+    }
+
+    public Court getCourt() {
+        return court;
+    }
+
+    public void setCourt(Court court) {
+        this.court = court;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
